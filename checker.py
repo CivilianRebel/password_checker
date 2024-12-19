@@ -27,10 +27,10 @@ def score(password):
      # this function will score the password out of 
      # 100 based on some arbitrary numbers I decide
      # first lets find out how many of each
-     uppers = len(re.findall(r'[A-Z]'))
-     lowers = len(re.findall(r'[a-z]'))
-     numbers = len(re.findall(r'[0-9]'))
-     specials = len(re.findall(r'[^A-Za-z0-9\s]'))
+     uppers = len(re.findall(r'[A-Z]', password))
+     lowers = len(re.findall(r'[a-z]', password))
+     numbers = len(re.findall(r'[0-9]', password))
+     specials = len(re.findall(r'[^A-Za-z0-9\s]', password))
      # for now lets just print it.
      print(f'Uppers: {uppers}')
      print(f'Lowers: {lowers}')
