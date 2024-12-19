@@ -18,10 +18,25 @@ def check(password):
     if not re.search(r'[0-9]', password):
          reasons.append("contain a number")
     # check if password has a special char
-    if not re.search(r'[^A-Za-z0-9]', password):
+    if not re.search(r'[^A-Za-z0-9\s]', password):
          reasons.append("contain a special character")
     return reasons
     
+
+def score(password):
+     # this function will score the password out of 
+     # 100 based on some arbitrary numbers I decide
+     # first lets find out how many of each
+     uppers = len(re.findall(r'[A-Z]'))
+     lowers = len(re.findall(r'[a-z]'))
+     numbers = len(re.findall(r'[0-9]'))
+     specials = len(re.findall(r'[^A-Za-z0-9\s]'))
+     # for now lets just print it.
+     print(f'Uppers: {uppers}')
+     print(f'Lowers: {lowers}')
+     print(f'Numbers: {numbers}')
+     print(f'Specials: {specials}')
+
 
 def clear():
      if os.name == 'nt':
@@ -46,6 +61,7 @@ if __name__ == '__main__':
              print(s)
         else:
              print('congrats on your good(enough) password')
+        score(user_input)
         
 
 
