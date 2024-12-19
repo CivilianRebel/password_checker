@@ -64,7 +64,7 @@ if __name__ == '__main__':
     print(f'NEVER EVER under ANY circumstances enter your password ANYWHERE!!\nUnless you FULLY TRUST the page or application')
     print(f'The source code for this project is fully available')
     print(f'It will NOT steal your password, but that does not mean you should trust just this warning!')
-    time.seep(5)
+    time.sleep(5)
     while True:
         # get user input
         user_input = input('Please input your password: \n')
