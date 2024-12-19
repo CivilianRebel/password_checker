@@ -28,7 +28,7 @@ if __name__ == '__main__':
         # get user input
         user_input = input('Please input your password: \n')
         checked = check(user_input)
-        print(checked)
+
         if len(checked) > 0:
              #password failed, list reasons
              s = "There are some things you could improve: \n"
