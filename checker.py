@@ -1,4 +1,5 @@
 import re
+import os
 
 
 def check(password):
@@ -22,12 +23,20 @@ def check(password):
     return reasons
     
 
+def clear():
+     if os.name == 'nt':
+         os.system('cls')
+     else:
+         os.system('clear')
+
 if __name__ == '__main__':
     # main
+    clear()
     while True:
         # get user input
         user_input = input('Please input your password: \n')
         checked = check(user_input)
+        
 
         if len(checked) > 0:
              #password failed, list reasons
