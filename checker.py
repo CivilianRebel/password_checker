@@ -46,23 +46,10 @@ def score(password):
     numbers = len(re.findall(r"[0-9]", password))
     specials = len(re.findall(r"[^A-Za-z0-9\s]", password))
     # for now lets just print it.
-    total = uppers + lowers + numbers + specials
-    N_uppers = uppers / total_len
-    N_lowers = lowers / total_len
-    N_numbers = numbers / total_len
-    N_specials = specials / total_len
-    N_total = N_uppers + N_lowers + N_numbers + N_specials
     print(f"Uppers: {uppers}")
     print(f"Lowers: {lowers}")
     print(f"Numbers: {numbers}")
     print(f"Specials: {specials}")
-    print()
-    print(f"Normalized Uppers: {N_uppers}")
-    print(f"Normalized Lowers: {N_lowers}")
-    print(f"Normalized Numbers: {N_numbers}")
-    print(f"Normalized Specials: {N_specials}")
-
-    print(f"Total: {total}\n Total N_: {N_total}")
 
 
 def clear():
