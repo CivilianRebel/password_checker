@@ -48,10 +48,20 @@ def score(password):
     # this function will score the password base on the amount of entropy, or randomness it has
     #count the occurances of each character
     char_count = count(password)
-    probabilities = [counts/len(password) for counts in char_count]
+    probabilities = [counts/len(password) for counts in char_count.values()]
     entropy = 0
     for p in probabilities:
         entropy -= -p * math.log2(p)
+    print(f"Entropy: {entropy}")
+
+    # so the magic numbers here are 10 digits(0-9)
+    # 26 lower case characters(a-z)
+    # 26 uppercase characters(A-Z)
+    # around 32 special chars ( ! @ # $ % ^ & * etc )
+
+    # so the whole formula is (length of data * log2(# of possibilities))
+    max_entropy = len(password) * math.log2(10 + 26 + 26 + 32)
+
     print(f"Entropy: {entropy}")
 
 def clear():
