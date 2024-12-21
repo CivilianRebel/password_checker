@@ -1,26 +1,34 @@
 import re
 import time
 import os
+import math
 
 
 def check(password):
     # returns true if all conditions are met, otherwise returns reason(s)
     # check if password is at least 8 chars long
     reasons = []
+
     if len(password) < 8:
         reasons.append("be longer than 8 characters long")
+
     # check if password has an uppercase char
     if not re.search(r"[A-Z]", password):
         reasons.append("contain an uppercase character")
+
     # check if password has a lowercase char
     if not re.search(r"[a-z]", password):
         reasons.append("contain a lowercase character")
+
     # check if password has a number
     if not re.search(r"[0-9]", password):
         reasons.append("contain a number")
+
     # check if password has a special char
     if not re.search(r"[^A-Za-z0-9\s]", password):
         reasons.append("contain a special character")
+
+
     return reasons
 
 
@@ -37,20 +45,14 @@ def count(password):
 
 
 def score(password):
-    # this function will score the password out of
-    # 100 based on some arbitrary numbers I decide
-    # first lets find out how many of each
-    total_len = len(password)
-    uppers = len(re.findall(r"[A-Z]", password))
-    lowers = len(re.findall(r"[a-z]", password))
-    numbers = len(re.findall(r"[0-9]", password))
-    specials = len(re.findall(r"[^A-Za-z0-9\s]", password))
-    # for now lets just print it.
-    print(f"Uppers: {uppers}")
-    print(f"Lowers: {lowers}")
-    print(f"Numbers: {numbers}")
-    print(f"Specials: {specials}")
-
+    # this function will score the password base on the amount of entropy, or randomness it has
+    #count the occurances of each character
+    char_count = count(password)
+    probabilities = [counts/len(password) for counts in char_count]
+    entropy = 0
+    for p in probabilities:
+        entropy -= -p * math.log2(p)
+    print(f"Entropy: {entropy}")
 
 def clear():
     if os.name == "nt":
