@@ -3,6 +3,7 @@ import time
 import os
 import math
 from collections import Counter
+import requests
 
 
 def check(password):
@@ -64,6 +65,30 @@ def clear():
         os.system("clear")
 
 
+def get_list(file_path="commons_passwords.txt"):
+    p_list = []
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as file:
+            p_list = [line.strip() for line in file]
+    else:
+        try:
+            r = requests.get("https://raw.githubusercontent.com/danielmiessler/SecLists/refs/heads/master/Passwords/Common-Credentials/10-million-password-list-top-1000000.txt")
+            with open(file_path, 'w+') as file:
+                file.writelines(r.text)
+        except Exception as e:
+            print(f'something went wrong, lazy exception catch. this is at the get list function\n{e}')
+            return False
+    return p_list
+        
+
+
+def test_dictionary(password):
+    # this function will test the password against a list of common passwords
+    commons = get_list()
+    if password in commons:
+        print(f'\n\n\n\n\nyou LOSE\n\n\n\n\n')
+
+
 if __name__ == "__main__":
     # main
     clear()
@@ -93,4 +118,9 @@ if __name__ == "__main__":
         else:
             print("\ncongrats on your good(enough) password\n")
         score(user_input)
-        input("\n\nPress [ENTER] to try another password...")
+        i = input("\nWould you like to check password against list of common passwords? [(Y)/n]\nMake your selection then press enter. ")
+        if len(i) <= 1 and 'n' in i:
+            continue
+        else:
+            test_dictionary(user_input)
+        
