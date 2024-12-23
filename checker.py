@@ -2,6 +2,7 @@ import re
 import time
 import os
 import math
+from collections import Counter
 
 
 def check(password):
@@ -32,27 +33,14 @@ def check(password):
     return reasons
 
 
-# count the number of times each character appears in the password
-def count(password):
-    # iterate thru the string
-    counts = {}
-    for char in password:
-        if char in counts.keys():
-            counts[char] += 1
-        else:
-            counts[char] = 1
-    return counts
-
-
 def score(password):
     # this function will score the password base on the amount of entropy, or randomness it has
+
     #count the occurances of each character
-    char_count = count(password)
+    char_count = Counter(password)
     probabilities = [counts/len(password) for counts in char_count.values()]
-    entropy = 0
-    for p in probabilities:
-        entropy -= -p * math.log2(p)
-    print(f"Entropy: {entropy}")
+    # count the entropy of each character, then multiply by the number of characters
+    entropy = -sum(p * math.log2(p) for p in probabilities) * len(password)
 
     # so the magic numbers here are 10 digits(0-9)
     # 26 lower case characters(a-z)
@@ -60,9 +48,14 @@ def score(password):
     # around 32 special chars ( ! @ # $ % ^ & * etc )
 
     # so the whole formula is (length of data * log2(# of possibilities))
-    max_entropy = len(password) * math.log2(10 + 26 + 26 + 32)
+    max_entropy = (len(password) * math.log2(10+26+26+32))
 
-    print(f"Entropy: {entropy}")
+    print(f"Entropy: {entropy}\nMax Entropy for len({len(password)}): {max_entropy}")
+
+    # normalize
+    n_entropy = entropy / max_entropy
+
+    print(f"Normalized Entropy: {n_entropy}")
 
 def clear():
     if os.name == "nt":
